@@ -131,7 +131,7 @@ const education = [
 ];
 
 const hudImagePrimary = 'images/profilew.jpg';
-const hudImageFallback = '2.png';
+const hudImageFallback = '1.png';
 
 // ---------- RENDER ----------
 const escapeHtml = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
