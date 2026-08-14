@@ -268,6 +268,7 @@ const closeAdmin = () => {
 const bootHudReadout = () => {
   const hudLines = ['CORE ......... OK', 'RENDER ....... OK', 'NETWORK ...... OK', 'PORTFOLIO .... LOADED'];
   const hudReadoutEl = document.getElementById('hud-readout');
+  if (!hudReadoutEl) return;
   hudLines.forEach((line, i) => {
     setTimeout(() => {
       const p = document.createElement('p');
@@ -280,15 +281,6 @@ const bootHudReadout = () => {
       });
     }, i * 260);
   });
-};
-
-const syncHudImageMode = () => {
-  const img = document.querySelector('.hud-image');
-  if (!img) return;
-  const isLight = document.documentElement.classList.contains('light');
-  img.style.filter = isLight
-    ? 'grayscale(0.08) contrast(1.02) brightness(0.94) saturate(0.92)'
-    : 'grayscale(0.12) contrast(1.08) brightness(0.88) saturate(0.88)';
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -306,7 +298,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   render();
   bootHudReadout();
-  syncHudImageMode();
 
   const root = document.documentElement;
   const themeBtn = document.getElementById('theme-toggle');
@@ -348,7 +339,6 @@ document.addEventListener('DOMContentLoaded', () => {
       };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       render();
-      syncHudImageMode();
       setStatus('Saved and re-rendered successfully.');
     } catch (error) {
       setStatus(`Save failed: ${error.message}`, true);
@@ -382,7 +372,6 @@ document.addEventListener('DOMContentLoaded', () => {
       adminJson.value = getJsonForEditor();
     }
     render();
-    syncHudImageMode();
     setStatus('Data reset to defaults.');
   });
 
@@ -390,7 +379,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const isLight = root.classList.toggle('light');
     root.classList.toggle('dark', !isLight);
     themeLabel.textContent = isLight ? '[ LIGHT ]' : '[ DARK ]';
-    requestAnimationFrame(syncHudImageMode);
   });
 
   document.getElementById('back-to-top').addEventListener('click', () => {

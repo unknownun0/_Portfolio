@@ -8,6 +8,9 @@
   --border-bright: #434856;
   --glow: rgba(255,255,255,0.06);
   --grid-line: rgba(255,255,255,0.035);
+  --grid-dot: rgba(255,255,255,0.32);
+  --grid-opacity: 0.8;
+  --scan-color: rgba(140,170,215,0.9);
 }
 
 html.dark{
@@ -20,6 +23,9 @@ html.dark{
   --border-bright: #434856;
   --glow: rgba(255,255,255,0.06);
   --grid-line: rgba(255,255,255,0.035);
+  --grid-dot: rgba(255,255,255,0.32);
+  --grid-opacity: 0.8;
+  --scan-color: rgba(140,170,215,0.9);
 }
 
 html.light{
@@ -32,6 +38,9 @@ html.light{
   --border-bright: #c7c1b8;
   --glow: rgba(0,0,0,0.05);
   --grid-line: rgba(0,0,0,0.03);
+  --grid-dot: rgba(0,0,0,0.28);
+  --grid-opacity: 0.75;
+  --scan-color: rgba(60,90,140,0.85);
 }
 
 *{ box-sizing: border-box; }
@@ -77,9 +86,9 @@ body{
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 1px 1px, rgba(0,0,0,.045) 1px, transparent 1.5px);
+    radial-gradient(circle at 1px 1px, var(--grid-dot) 1px, transparent 1.5px);
   background-size: 12px 12px;
-  opacity: .55;
+  opacity: var(--grid-opacity);
   pointer-events: none;
 }
 
@@ -121,7 +130,7 @@ body{
   height: 100%;
   object-fit: contain;
   object-position: center bottom;
-  filter: grayscale(1) contrast(1.25) brightness(.98);
+  filter: grayscale(.12) contrast(1.08) brightness(.88) saturate(.88);
   transform: scale(1.06);
 }
 
@@ -134,7 +143,7 @@ html.dark .hero-portrait{
 }
 
 html.light .hero-portrait img{
-  filter: grayscale(1) contrast(1.3) brightness(1.02);
+  filter: grayscale(.08) contrast(1.02) brightness(.94) saturate(.92);
 }
 
 html.dark .portrait-cutout{
@@ -167,15 +176,15 @@ html.dark .portrait-cutout{
   right: 0;
   bottom: -1.75rem;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(120,150,190,.55), transparent);
-  opacity: .45;
+  background: linear-gradient(90deg, transparent, var(--scan-color), transparent);
+  opacity: .85;
   animation: scanline 7s linear infinite;
 }
 
 @keyframes scanline{
   0%{ transform: translateY(52px); opacity: 0; }
-  10%{ opacity: .45; }
-  50%{ opacity: .3; }
+  10%{ opacity: .85; }
+  50%{ opacity: .55; }
   100%{ transform: translateY(-320px); opacity: 0; }
 }
 
