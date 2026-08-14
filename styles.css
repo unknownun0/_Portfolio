@@ -75,6 +75,21 @@ body{
   white-space: nowrap;
 }
 
+.skills-card{
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease, background-color .25s ease;
+}
+
+.skills-card:hover{
+  transform: translateY(-4px);
+  border-color: var(--fg-mute);
+  box-shadow: 0 0 0 1px var(--glow), 0 0 24px var(--glow);
+}
+
+.skills-card:hover .pill{
+  border-color: var(--border-bright);
+  color: var(--fg);
+}
+
 .status-dot{
   width:6px; height:6px; border-radius:9999px;
   background: var(--fg);

@@ -4,7 +4,7 @@ const projects = [
     id: '01',
     title: 'Heritage Park Taguig Management System',
     role: 'Full-Stack Developer',
-    image: 'D:\\xampp\\_Portfolio\\Screenshot 2026-07-15 132524.png',
+    image: './Screenshot 2026-07-15 132524.png',
     tags: ['PHP', 'JavaScript', 'MySQL', 'Tailwind CSS'],
     bullets: [
       'Architected and developed a full-stack web application using PHP, JavaScript, and MySQL to streamline park operations and record management.',
@@ -16,7 +16,7 @@ const projects = [
     id: '02',
     title: 'Student Health Record (SHR) & Admin Analytics System',
     role: 'Full-Stack Developer',
-    image: 'D:\\xampp\\_Portfolio\\Screenshot 2026-06-09 092009.png',
+    image: './Screenshot 2026-06-09 092009.png',
     tags: ['PHP', 'MySQL', 'JavaScript', 'Tailwind CSS', 'UI/UX'],
     bullets: [
       'Designed and built an interactive analytics dashboard interface using Tailwind CSS, JavaScript, and institutional color branding.',
@@ -28,7 +28,7 @@ const projects = [
     id: '03',
     title: 'Online Booking System (Roma Bus)',
     role: 'Full-Stack Developer',
-    image: 'D:\\xampp\\_Portfolio\\2.png',
+    image: './2.png',
     tags: ['PHP', 'MySQL', 'XAMPP', 'AI Chatbot', 'Analytics'],
     bullets: [
       'Developed a web-based bus booking platform enabling travelers to view real-time bus availability, schedules, driver details, and locations.',
@@ -55,19 +55,19 @@ const certifications = [
     name: 'Python',
     issuer: 'freeCodeCamp',
     link: 'https://freecodecamp.org/certification/fccaada7d45-00a6-4feb-a757-d51238c2ebea/python-v9',
-    image: 'D:\\xampp\\_Portfolio\\cert3.png',
+    image: './cert3.png',
   },
   {
     name: 'Responsive Web Design',
     issuer: 'freeCodeCamp',
     link: 'https://freecodecamp.org/certification/fccaada7d45-00a6-4feb-a757-d51238c2ebea/responsive-web-design-v9',
-    image: 'D:\\xampp\\_Portfolio\\cert1.png',
+    image: './cert1.png',
   },
   {
     name: 'JavaScript Algorithms and Data Structures',
     issuer: 'freeCodeCamp',
     link: 'https://freecodecamp.org/certification/fccaada7d45-00a6-4feb-a757-d51238c2ebea/javascript-v9',
-    image: 'D:\\xampp\\_Portfolio\\cert4.png',
+    image: './cert4.png',
   },
 ];
 
@@ -217,7 +217,7 @@ document.getElementById('cert-grid').innerHTML = certifications
 
 document.getElementById('skills-grid').innerHTML = skills
   .map((s) => `
-    <div>
+    <div class="skills-card glow-border ticks p-6 h-full" style="background:var(--bg-elev);">
       <p class="font-mono text-xs tracking-widest mb-3 pb-2" style="color:var(--fg-mute); border-bottom:1px solid var(--border);">${escapeHtml(s.cat.toUpperCase())}</p>
       <div class="flex flex-wrap gap-2">
         ${s.items.map((i) => `<span class="pill">${escapeHtml(i)}</span>`).join('')}
