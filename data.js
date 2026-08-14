@@ -9,6 +9,9 @@ const defaultState = {
       title: 'Heritage Park Taguig Management System',
       role: 'Full-Stack Developer',
       image: './Screenshot 2026-07-15 132524.png',
+      link: '',
+      github: '',
+      video: '',
       tags: ['PHP', 'JavaScript', 'MySQL', 'Tailwind CSS'],
       bullets: [
         'Architected and developed a full-stack web application using PHP, JavaScript, and MySQL to streamline park operations and record management.',
@@ -21,6 +24,9 @@ const defaultState = {
       title: 'Student Health Record (SHR) & Admin Analytics System',
       role: 'Full-Stack Developer',
       image: './Screenshot 2026-06-09 092009.png',
+      link: '',
+      github: '',
+      video: '',
       tags: ['PHP', 'MySQL', 'JavaScript', 'Tailwind CSS', 'UI/UX'],
       bullets: [
         'Designed and built an interactive analytics dashboard interface using Tailwind CSS, JavaScript, and institutional color branding.',
@@ -33,6 +39,9 @@ const defaultState = {
       title: 'Online Booking System (Roma Bus)',
       role: 'Full-Stack Developer',
       image: './2.png',
+      link: '',
+      github: '',
+      video: '',
       tags: ['PHP', 'MySQL', 'XAMPP', 'AI Chatbot', 'Analytics'],
       bullets: [
         'Developed a web-based bus booking platform enabling travelers to view real-time bus availability, schedules, driver details, and locations.',
@@ -45,6 +54,9 @@ const defaultState = {
       title: 'Online Grading Management System AZGH College Inc.',
       role: 'Full-Stack Developer',
       image: '',
+      link: '',
+      github: '',
+      video: '',
       tags: ['PHP', 'XAMPP', 'HTML5', 'CSS3', 'Tailwind CSS', 'JavaScript'],
       bullets: [
         'Built a web-based grading system to automate grade computation across Performance Tasks, Written Works, and Examinations.',

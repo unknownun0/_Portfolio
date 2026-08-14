@@ -15,11 +15,28 @@ const imageBlock = (src, alt, fallbackText, heightClass) =>
       </div>
     `;
 
+const videoEmbed = (video, image, title) => {
+  const src = String(video || '').trim();
+  if (!src) return '';
+  const yt = src.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]{11})/);
+  const frame = yt
+    ? `<iframe src="https://www.youtube.com/embed/${escapeHtml(yt[1])}" title="${escapeHtml(title + ' video')}" class="h-48 w-full" allowfullscreen loading="lazy"></iframe>`
+    : `<video src="${escapeHtml(src)}" poster="${escapeHtml(image || '')}" controls preload="metadata" class="h-48 w-full object-cover"></video>`;
+  return `<div class="mb-4 overflow-hidden rounded-md border" style="border-color:var(--border);">${frame}</div>`;
+};
+
+const projectLinks = (p) => {
+  const parts = [];
+  if (p.link) parts.push(`<a href="${escapeHtml(p.link)}" target="_blank" rel="noopener" class="pill">LIVE ↗</a>`);
+  if (p.github) parts.push(`<a href="${escapeHtml(p.github)}" target="_blank" rel="noopener" class="pill">GITHUB ↗</a>`);
+  return parts.join('');
+};
+
 const render = () => {
   document.getElementById('project-grid').innerHTML = state.projects
     .map((p) => `
-      <article class="glow-border ticks p-6 flex flex-col" style="background:var(--bg-elev);">
-        ${imageBlock(p.image, p.title + ' preview', 'Add an image path in admin JSON', 'h-48')}
+      <article class="carousel-card glow-border ticks p-6 flex flex-col" style="background:var(--bg-elev);">
+        ${p.video ? videoEmbed(p.video, p.image, p.title) : imageBlock(p.image, p.title + ' preview', 'Add an image path in admin JSON', 'h-48')}
         <div class="flex items-center justify-between mb-4">
           <span class="font-mono text-[11px] tracking-widest px-2 py-1" style="color:var(--fg-mute); border:1px solid var(--border);">[ PROJECT_ID: ${escapeHtml(p.id)} ]</span>
         </div>
@@ -31,6 +48,7 @@ const render = () => {
         <div class="flex flex-wrap gap-2">
           ${p.tags.map((t) => `<span class="pill">${escapeHtml(t)}</span>`).join('')}
         </div>
+        <div class="mt-5 flex flex-wrap gap-2">${projectLinks(p)}</div>
       </article>
     `)
     .join('');
@@ -138,6 +156,16 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('back-to-top').addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  const carousel = document.getElementById('project-grid');
+  const carouselPrev = document.getElementById('carousel-prev');
+  const carouselNext = document.getElementById('carousel-next');
+  const carouselStep = () => {
+    const card = carousel.querySelector('.carousel-card');
+    return card ? card.offsetWidth + 20 : carousel.clientWidth * 0.8;
+  };
+  carouselPrev.addEventListener('click', () => carousel.scrollBy({ left: -carouselStep(), behavior: 'smooth' }));
+  carouselNext.addEventListener('click', () => carousel.scrollBy({ left: carouselStep(), behavior: 'smooth' }));
 
   const observer = new IntersectionObserver(
     (entries) => {

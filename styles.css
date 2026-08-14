@@ -81,18 +81,6 @@ body{
   position: relative;
 }
 
-.hero-section::before{
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to right, var(--grid-line-color) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-line-color) 1px, transparent 1px);
-  background-size: 36px 36px;
-  opacity: var(--grid-opacity);
-  pointer-events: none;
-}
-
 .hero-shell{
   display: grid;
   grid-template-columns: 1.05fr 1fr;
@@ -384,6 +372,31 @@ html.dark .portrait-cutout{
 @keyframes blink{ 50%{ opacity:0; } }
 
 .timeline-line{ background: var(--border); }
+
+.carousel{
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-bright) transparent;
+  padding: 0 0 1rem;
+}
+
+.carousel > *{
+  flex: 0 0 min(85vw, 360px);
+  scroll-snap-align: start;
+  align-self: stretch;
+}
+
+.carousel::-webkit-scrollbar{ height: 6px; }
+
+.carousel-nav{
+  display: flex;
+  justify-content: flex-end;
+  gap: .6rem;
+  margin-top: .25rem;
+}
 
 .site-footer{
   max-width: 1200px;
