@@ -130,7 +130,7 @@ const education = [
   { school: 'Captain Albert Aguilar National High School', degree: 'High School Graduate', years: '2016    2020' },
 ];
 
-const hudImagePrimary = 'images/profilew.jpg';
+const hudImagePrimary = '';
 const hudImageFallback = '1.png';
 
 // ---------- RENDER ----------
