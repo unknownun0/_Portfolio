@@ -21,7 +21,7 @@ const videoEmbed = (video, image, title) => {
   const yt = src.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]{11})/);
   const frame = yt
     ? `<iframe src="https://www.youtube.com/embed/${escapeHtml(yt[1])}" title="${escapeHtml(title + ' video')}" class="h-48 w-full" allowfullscreen loading="lazy"></iframe>`
-    : `<video src="${escapeHtml(src)}" poster="${escapeHtml(image || '')}" controls preload="metadata" class="h-48 w-full object-cover"></video>`;
+    : `<video src="${escapeHtml(src)}" poster="${escapeHtml(image || '')}" controls autoplay muted loop playsinline preload="metadata" class="h-48 w-full object-cover"></video>`;
   return `<div class="mb-4 overflow-hidden rounded-md border" style="border-color:var(--border);">${frame}</div>`;
 };
 
@@ -160,12 +160,62 @@ document.addEventListener('DOMContentLoaded', () => {
   const carousel = document.getElementById('project-grid');
   const carouselPrev = document.getElementById('carousel-prev');
   const carouselNext = document.getElementById('carousel-next');
+
+  document.querySelectorAll('#project-grid .carousel-card').forEach((card) => {
+    const clone = card.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    carousel.appendChild(clone);
+  });
+
+  const GAP = 20;
   const carouselStep = () => {
     const card = carousel.querySelector('.carousel-card');
-    return card ? card.offsetWidth + 20 : carousel.clientWidth * 0.8;
+    return card ? card.offsetWidth + GAP : carousel.clientWidth * 0.8;
   };
-  carouselPrev.addEventListener('click', () => carousel.scrollBy({ left: -carouselStep(), behavior: 'smooth' }));
-  carouselNext.addEventListener('click', () => carousel.scrollBy({ left: carouselStep(), behavior: 'smooth' }));
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const autoAdvance = () => {
+    if (carousel.matches(':hover') || document.hidden) return;
+    const half = carousel.scrollWidth / 2;
+    if (carousel.scrollLeft >= half) {
+      carousel.scrollLeft = 0;
+    }
+    carousel.scrollBy({ left: carouselStep(), behavior: 'smooth' });
+  };
+
+  let autoTimer = null;
+  const startAuto = () => {
+    stopAuto();
+    autoTimer = setInterval(autoAdvance, 3800);
+  };
+  const stopAuto = () => {
+    if (autoTimer) clearInterval(autoTimer);
+    autoTimer = null;
+  };
+
+  if (!reduceMotion) {
+    startAuto();
+    const resumeSoon = () => {
+      stopAuto();
+      setTimeout(startAuto, 6000);
+    };
+    carousel.addEventListener('wheel', resumeSoon, { passive: true });
+    carousel.addEventListener('touchstart', resumeSoon, { passive: true });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stopAuto();
+      else startAuto();
+    });
+  }
+
+  carouselPrev.addEventListener('click', () => {
+    carousel.scrollBy({ left: -carouselStep(), behavior: 'smooth' });
+    if (!reduceMotion) setTimeout(startAuto, 6000);
+  });
+  carouselNext.addEventListener('click', () => {
+    carousel.scrollBy({ left: carouselStep(), behavior: 'smooth' });
+    if (!reduceMotion) setTimeout(startAuto, 6000);
+  });
 
   const observer = new IntersectionObserver(
     (entries) => {
