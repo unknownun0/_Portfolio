@@ -4,117 +4,92 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Earl John A. Gomez</title>
-    <meta
-      name="description"
-      content="Earl John A. Gomez â€” Full-Stack Developer & Digital Content Specialist. Portfolio, projects, skills, and experience."
-    />
+    <meta name="description" content="Earl John A. Gomez - Full-Stack Developer & Digital Content Specialist." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body class="antialiased">
-    <header
-      class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md"
-      style="background: color-mix(in srgb, var(--bg) 78%, transparent); border-bottom:1px solid var(--border);"
-    >
-      <div class="max-w-6xl mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
-        <a href="#top" class="font-mono text-xs tracking-widest" style="color:var(--fg-dim);">
-          [ MY: EJAG-PORTFOLIO ]
-        </a>
-        <nav class="hidden md:flex items-center gap-8 font-mono text-xs tracking-wider" style="color:var(--fg-dim);">
-          <a href="#projects" class="hover:opacity-100 opacity-70 transition-opacity">PROJECTS</a>
-          <a href="#skills" class="hover:opacity-100 opacity-70 transition-opacity">SKILLS</a>
-          <a href="#experience" class="hover:opacity-100 opacity-70 transition-opacity">EXPERIENCE</a>
-          <a href="#education" class="hover:opacity-100 opacity-70 transition-opacity">EDUCATION</a>
+    <aside class="desktop-sidebar">
+      <div>
+        <a href="#top" class="sidebar-brand">Earl John Gomez</a>
+        <nav class="sidebar-nav">
+          <a href="#projects">Projects</a>
+          <a href="#experience">Experience</a>
+          <a href="#skills">Stack</a>
+          <a href="#certifications">Certifications</a>
+          <a href="#education">Education</a>
         </nav>
-        <div class="flex items-center gap-4">
-          <span class="hidden sm:flex items-center gap-2 font-mono text-xs" style="color:var(--fg-dim);">
-            <span class="status-dot"></span> STATUS: ONLINE
-          </span>
-          <button id="theme-toggle" aria-label="Toggle light and dark mode" class="glow-border font-mono text-xs px-3 py-1.5" style="color:var(--fg-dim);">
-            <span id="theme-label">[ DARK ]</span>
-          </button>
+      </div>
+      <div class="sidebar-footer">
+        <p>For work, collabs &amp; everything else, reach me at</p>
+        <a href="mailto:earljohngomez66@gmail.com">earljohngomez66@gmail.com</a>
+      </div>
+    </aside>
+
+    <header class="mobile-header fixed top-0 left-0 right-0 z-50 backdrop-blur-md" style="background: color-mix(in srgb, var(--bg) 88%, transparent); border-bottom:1px solid var(--border);">
+      <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 md:px-10">
+        <a href="#top" class="font-mono text-xs tracking-widest" style="color:var(--fg-dim);">[ MY: EJAG-PORTFOLIO ]</a>
+        <div class="flex items-center gap-3">
+          <button id="admin-open" aria-label="Open admin panel" class="glow-border font-mono text-xs px-3 py-1.5" style="color:var(--fg-dim);">[ ADMIN ]</button>
+          <button id="theme-toggle" aria-label="Toggle light and dark mode" class="glow-border font-mono text-xs px-3 py-1.5" style="color:var(--fg-dim);"><span id="theme-label">[ DARK ]</span></button>
         </div>
       </div>
     </header>
 
-    <main id="top">
-      <section class="relative min-h-[100svh] flex items-center bg-grid overflow-hidden pt-16">
-        <div class="scan-line"></div>
-        <div class="max-w-6xl mx-auto px-6 md:px-10 w-full py-20">
-          <div class="reveal grid md:grid-cols-[1fr_auto] gap-10 items-start">
-            <div>
-              <p class="font-mono text-xs tracking-[0.25em] mb-6" style="color:var(--fg-mute);">
-                <span class="blink">_</span> INITIALIZING PROFILE
-              </p>
-              <h1 class="font-display font-medium leading-[0.95] tracking-tight" style="font-size: clamp(2.6rem, 7vw, 5.5rem);">
-                EARL JOHN A. GOMEZ
-              </h1>
-              <div class="mt-6 inline-block glow-border px-4 py-2 ticks">
-                <span class="font-mono text-xs md:text-sm tracking-wider" style="color:var(--fg-dim);">
-                  [ FULL-STACK DEVELOPER &amp; DIGITAL CONTENT SPECIALIST ]
-                </span>
-              </div>
-              <div class="mt-10 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs md:text-sm" style="color:var(--fg-dim);">
-                <span>Versatile Full-Stack Web Developer and digital content specialist with hands-on experience building responsive web applications, integrating AI APIs, and designing backend system architectures.</span>
-              </div>
-              <div class="mt-10 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs md:text-sm" style="color:var(--fg-dim);">
-                <span>LAS PINAS CITY, PH</span>
-                <span style="color:var(--border-bright);">/</span>
-                <span>0962 423 8760</span>
-                <span style="color:var(--border-bright);">/</span>
-                <span>earljohngomez66@gmail.com</span>
-              </div>
- 
-              <div class="mt-8 flex flex-wrap gap-3">
-                <a href="https://github.com/" target="_blank" rel="noopener" class="glow-border flex items-center gap-2 px-4 py-2.5 font-mono text-xs">GITHUB</a>
-                <a href="https://linkedin.com/" target="_blank" rel="noopener" class="glow-border flex items-center gap-2 px-4 py-2.5 font-mono text-xs">LINKEDIN</a>
-                <a href="mailto:earljohngomez66@gmail.com" class="glow-border flex items-center gap-2 px-4 py-2.5 font-mono text-xs">EMAIL</a>
-              </div>
-            </div>
-            <div class="glow-border ticks font-mono text-[11px] leading-relaxed p-5 w-full md:w-64 shrink-0" style="color:var(--fg-mute);">
-              <div id="hud-image" class="mb-4 h-82 overflow-hidden rounded-md border" style="border-color:var(--border);"></div>
-              <p style="color:var(--fg-dim);">// SYSTEM READOUT</p>
-              <div class="mt-3 space-y-1.5" id="hud-readout"></div>
-              <p class="mt-4">LAT: 14.4453Â° N</p>
-              <p>LNG: 120.9833Â° E</p>
-              <p class="mt-3" style="color:var(--fg-dim);">[ AWAITING INPUT<span class="blink">_</span> ]</p>
+    <main id="top" class="site-main">
+      <section class="hero-section">
+        <div class="hero-shell reveal">
+          <div class="hero-image">
+            <div id="hud-image" class="hero-portrait"></div>
+          </div>
+          <div class="hero-copy">
+            <h1 class="hero-title">Earl John A. Gomez</h1>
+            <p class="hero-lead">I’m a full-stack engineer. I build modern web apps, handle backend systems, and create digital content with a practical, hands-on approach.</p>
+            <p class="hero-lead">Right now I’m focused on responsive web applications, AI API integration, and clean interfaces that are easy to edit and maintain.</p>
+            <div class="hero-links">
+              <a href="https://github.com/" target="_blank" rel="noopener">github ↗</a>
+              <a href="https://linkedin.com/" target="_blank" rel="noopener">linkedin ↗</a>
+              <a href="mailto:earljohngomez66@gmail.com">email ↗</a>
             </div>
           </div>
         </div>
+        <div class="hero-stats">
+          <div><span>Frontend</span><strong>UI / UX</strong></div>
+          <div><span>Backend</span><strong>PHP / MySQL</strong></div>
+          <div><span>AI</span><strong>APIs</strong></div>
+          <div><span>Media</span><strong>Content</strong></div>
+        </div>
       </section>
 
-      <section id="projects" class="max-w-6xl mx-auto px-6 md:px-10 py-8 md:py-16">
-        <div class="reveal flex items-baseline justify-between mb-10 flex-wrap gap-3">
+      <section id="projects" class="content-section">
+        <div class="reveal section-head">
           <h2 class="font-display text-3xl md:text-4xl">// 01 Technical Projects</h2>
           <span class="font-mono text-xs" style="color:var(--fg-mute);">[ COUNT: 04 ]</span>
         </div>
         <div class="grid md:grid-cols-2 gap-5" id="project-grid"></div>
       </section>
 
-      <section id="certifications" class="max-w-6xl mx-auto px-6 md:px-10 py-24">
-        <div class="reveal flex items-baseline justify-between mb-10 flex-wrap gap-3">
+      <section id="certifications" class="content-section">
+        <div class="reveal section-head">
           <h2 class="font-display text-3xl md:text-4xl">// 02 Certifications</h2>
           <span class="font-mono text-xs" style="color:var(--fg-mute);">[ VERIFIED: 03 ]</span>
         </div>
         <div class="reveal grid sm:grid-cols-3 gap-5" id="cert-grid"></div>
       </section>
 
-      <section id="skills" class="max-w-6xl mx-auto px-6 md:px-10 py-8 md:py-16">
-        <div class="reveal flex items-baseline justify-between mb-10 flex-wrap gap-3">
+      <section id="skills" class="content-section">
+        <div class="reveal section-head">
           <h2 class="font-display text-3xl md:text-4xl">// 03 Skills</h2>
           <span class="font-mono text-xs" style="color:var(--fg-mute);">[ CATEGORIES: 08 ]</span>
         </div>
         <div class="reveal grid md:grid-cols-2 gap-x-10 gap-y-8" id="skills-grid"></div>
       </section>
 
-      <section id="experience" class="max-w-6xl mx-auto px-6 md:px-10 py-24">
-        <div class="reveal flex items-baseline justify-between mb-14 flex-wrap gap-3">
+      <section id="experience" class="content-section">
+        <div class="reveal section-head">
           <h2 class="font-display text-3xl md:text-4xl">// 04 Work Experience</h2>
           <span class="font-mono text-xs" style="color:var(--fg-mute);">[ ENTRIES: 04 ]</span>
         </div>
@@ -123,8 +98,8 @@
         </div>
       </section>
 
-      <section id="education" class="max-w-6xl mx-auto px-6 md:px-10 py-8 md:py-24">
-        <div class="reveal flex items-baseline justify-between mb-10 flex-wrap gap-3">
+      <section id="education" class="content-section">
+        <div class="reveal section-head">
           <h2 class="font-display text-3xl md:text-4xl">// 05 Education</h2>
           <span class="font-mono text-xs" style="color:var(--fg-mute);">[ RECORDS: 03 ]</span>
         </div>
@@ -132,16 +107,43 @@
       </section>
     </main>
 
-    <footer class="border-t" style="border-color:var(--border);">
-      <div class="max-w-6xl mx-auto px-6 md:px-10 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p class="font-mono text-xs text-center sm:text-left" style="color:var(--fg-mute);">
-          [ Â© 2026 EARL JOHN A. GOMEZ // ALL SYSTEMS OPERATIONAL ]
-        </p>
-        <button id="back-to-top" class="glow-border font-mono text-xs px-4 py-2 flex items-center gap-2" style="color:var(--fg-dim);">
-          BACK TO TOP
-        </button>
-      </div>
+    <footer class="site-footer">
+      <button id="back-to-top" class="glow-border font-mono text-xs px-4 py-2 flex items-center gap-2" style="color:var(--fg-dim);">BACK TO TOP</button>
     </footer>
+
+    <div id="admin-modal" class="admin-modal hidden" aria-hidden="true">
+      <div class="admin-backdrop" data-admin-close></div>
+      <div class="admin-panel glow-border ticks">
+        <div class="flex items-center justify-between gap-4 mb-4">
+          <div>
+            <p class="font-mono text-[11px] tracking-widest" style="color:var(--fg-mute);">[ ADMIN PANEL ]</p>
+            <h2 class="font-display text-2xl mt-1">Edit portfolio content</h2>
+          </div>
+          <button class="glow-border font-mono text-xs px-3 py-2" data-admin-close style="color:var(--fg-dim);">CLOSE</button>
+        </div>
+        <div id="admin-login">
+          <label class="block font-mono text-xs mb-2" style="color:var(--fg-dim);">Username</label>
+          <input id="admin-user" class="admin-input" type="text" autocomplete="username" />
+          <label class="block font-mono text-xs mb-2 mt-4" style="color:var(--fg-dim);">Password</label>
+          <input id="admin-pass" class="admin-input" type="password" autocomplete="current-password" />
+          <div class="mt-4 flex gap-3 flex-wrap">
+            <button id="admin-login-btn" class="glow-border font-mono text-xs px-4 py-2" style="color:var(--fg-dim);">LOGIN</button>
+            <button id="admin-reset-btn" class="glow-border font-mono text-xs px-4 py-2" style="color:var(--fg-dim);">RESET DATA</button>
+          </div>
+          <p class="font-mono text-[11px] mt-3" style="color:var(--fg-mute);">Client-side only. Use username `admin` and password `gomez2003`.</p>
+        </div>
+        <div id="admin-editor" class="hidden">
+          <label class="block font-mono text-xs mb-2" style="color:var(--fg-dim);">Portfolio JSON</label>
+          <textarea id="admin-json" class="admin-input admin-textarea font-mono text-xs"></textarea>
+          <div class="mt-4 flex flex-wrap gap-3">
+            <button id="admin-save-btn" class="glow-border font-mono text-xs px-4 py-2" style="color:var(--fg-dim);">SAVE</button>
+            <button id="admin-export-btn" class="glow-border font-mono text-xs px-4 py-2" style="color:var(--fg-dim);">EXPORT</button>
+            <button id="admin-copy-btn" class="glow-border font-mono text-xs px-4 py-2" style="color:var(--fg-dim);">COPY JSON</button>
+          </div>
+          <p id="admin-status" class="font-mono text-[11px] mt-3" style="color:var(--fg-mute);"></p>
+        </div>
+      </div>
+    </div>
 
     <script src="script.js" defer></script>
   </body>
