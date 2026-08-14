@@ -1,35 +1,35 @@
 :root{
-  --bg: #fafafa;
-  --bg-elev: #ffffff;
-  --fg: #111111;
-  --fg-dim: #5b5b5b;
-  --fg-mute: #8a8a8a;
-  --border: #e5e5e5;
-  --border-bright: #cfcfcf;
-  --glow: rgba(0,0,0,0.06);
-  --grid-line: rgba(0,0,0,0.035);
+  --bg: #0f1012;
+  --bg-elev: #17181c;
+  --fg: #f5f5f5;
+  --fg-dim: #b7b7bd;
+  --fg-mute: #7f828a;
+  --border: #2b2e35;
+  --border-bright: #434856;
+  --glow: rgba(255,255,255,0.06);
+  --grid-line: rgba(255,255,255,0.035);
 }
 
 html.dark{
-  --bg: #fafafa;
-  --bg-elev: #ffffff;
-  --fg: #111111;
-  --fg-dim: #5b5b5b;
-  --fg-mute: #8a8a8a;
-  --border: #e5e5e5;
-  --border-bright: #cfcfcf;
-  --glow: rgba(0,0,0,0.06);
-  --grid-line: rgba(0,0,0,0.035);
+  --bg: #0f1012;
+  --bg-elev: #17181c;
+  --fg: #f5f5f5;
+  --fg-dim: #b7b7bd;
+  --fg-mute: #7f828a;
+  --border: #2b2e35;
+  --border-bright: #434856;
+  --glow: rgba(255,255,255,0.06);
+  --grid-line: rgba(255,255,255,0.035);
 }
 
 html.light{
-  --bg: #f4f1ea;
-  --bg-elev: #fffdf8;
-  --fg: #161616;
-  --fg-dim: #626262;
-  --fg-mute: #929292;
-  --border: #dfdbd2;
-  --border-bright: #c9c2b6;
+  --bg: #f6f4ef;
+  --bg-elev: #ffffff;
+  --fg: #111111;
+  --fg-dim: #4f4f55;
+  --fg-mute: #7e7e85;
+  --border: #dedad3;
+  --border-bright: #c7c1b8;
   --glow: rgba(0,0,0,0.05);
   --grid-line: rgba(0,0,0,0.03);
 }
@@ -43,8 +43,8 @@ body{
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
 }
-.font-display{ font-family: 'Inter', sans-serif; font-weight: 500; letter-spacing: -0.03em; }
-.font-mono{ font-family: 'IBM Plex Mono', monospace; }
+.font-display{ font-family: 'JetBrains Mono', monospace; font-weight: 600; letter-spacing: -0.05em; }
+.font-mono{ font-family: 'JetBrains Mono', monospace; }
 
 .desktop-sidebar{
   display: none;
@@ -82,6 +82,43 @@ body{
   border: 1px solid var(--border);
   background: var(--bg-elev);
   overflow: hidden;
+  position: relative;
+}
+
+.hero-portrait::after{
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 28%, rgba(255,255,255,.1), transparent 32%),
+    linear-gradient(to bottom, transparent 30%, rgba(0,0,0,.08));
+  pointer-events: none;
+}
+
+.hero-portrait img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: grayscale(1) contrast(1.12) brightness(.96);
+  transform: scale(1.06);
+}
+
+.portrait-cutout{
+  mix-blend-mode: multiply;
+}
+
+html.dark .hero-portrait{
+  background: #14151a;
+}
+
+html.light .hero-portrait img{
+  filter: grayscale(1) contrast(1.18) brightness(1.02);
+}
+
+html.dark .portrait-cutout{
+  mix-blend-mode: screen;
+  opacity: .92;
 }
 
 .hero-copy{
@@ -163,7 +200,7 @@ body{
 .sidebar-brand{
   color: var(--fg);
   text-decoration: none;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 1rem;
 }
 
@@ -176,14 +213,14 @@ body{
 .sidebar-nav a{
   color: var(--fg-dim);
   text-decoration: none;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: .9rem;
 }
 
 .sidebar-footer{
   border-top: 1px solid var(--border);
   padding-top: 1rem;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: .82rem;
   color: var(--fg-dim);
 }
@@ -205,7 +242,7 @@ body{
 }
 
 .pill{
-  font-family:'IBM Plex Mono', monospace;
+  font-family:'JetBrains Mono', monospace;
   font-size: .72rem;
   letter-spacing: .01em;
   padding: .35rem .6rem;
@@ -237,7 +274,7 @@ body{
 .admin-backdrop{
   position: absolute;
   inset: 0;
-  background: rgba(255,255,255,.72);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
   backdrop-filter: blur(8px);
 }
 .admin-panel{
@@ -291,6 +328,14 @@ body{
 
 .timeline-line{ background: var(--border); }
 
+.site-footer{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
 ::-webkit-scrollbar{ width: 8px; }
 ::-webkit-scrollbar-track{ background: var(--bg); }
 ::-webkit-scrollbar-thumb{ background: var(--border-bright); }
@@ -306,7 +351,7 @@ body{
     width: 220px;
     padding: 2rem 1.5rem;
     border-right: 1px solid var(--border);
-    background: color-mix(in srgb, var(--bg) 94%, white);
+    background: color-mix(in srgb, var(--bg) 96%, white);
     z-index: 20;
   }
   .site-main{

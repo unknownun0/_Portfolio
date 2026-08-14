@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <img
         src="./1.png"
         alt="HUD image"
-        class="hud-image h-full w-full object-cover"
+        class="hud-image h-full w-full object-cover portrait-cutout"
         loading="lazy"
       >
     `;
