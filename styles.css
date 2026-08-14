@@ -8,7 +8,7 @@
   --border-bright: #434856;
   --glow: rgba(255,255,255,0.06);
   --grid-line: rgba(255,255,255,0.035);
-  --grid-dot: rgba(255,255,255,0.32);
+  --grid-line-color: rgba(255,255,255,0.32);
   --grid-opacity: 0.8;
   --scan-color: rgba(140,170,215,0.9);
 }
@@ -23,7 +23,7 @@ html.dark{
   --border-bright: #434856;
   --glow: rgba(255,255,255,0.06);
   --grid-line: rgba(255,255,255,0.035);
-  --grid-dot: rgba(255,255,255,0.32);
+  --grid-line-color: rgba(255,255,255,0.32);
   --grid-opacity: 0.8;
   --scan-color: rgba(140,170,215,0.9);
 }
@@ -38,7 +38,7 @@ html.light{
   --border-bright: #c7c1b8;
   --glow: rgba(0,0,0,0.05);
   --grid-line: rgba(0,0,0,0.03);
-  --grid-dot: rgba(0,0,0,0.28);
+  --grid-line-color: rgba(0,0,0,0.28);
   --grid-opacity: 0.75;
   --scan-color: rgba(60,90,140,0.85);
 }
@@ -86,8 +86,9 @@ body{
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 1px 1px, var(--grid-dot) 1px, transparent 1.5px);
-  background-size: 12px 12px;
+    linear-gradient(to right, var(--grid-line-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line-color) 1px, transparent 1px);
+  background-size: 36px 36px;
   opacity: var(--grid-opacity);
   pointer-events: none;
 }
