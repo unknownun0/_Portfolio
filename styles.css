@@ -69,6 +69,18 @@ body{
   max-width: 1200px;
   margin: 0 auto;
   padding: 2.5rem 1.5rem 1rem;
+  position: relative;
+}
+
+.hero-section::before{
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(0,0,0,.045) 1px, transparent 1.5px);
+  background-size: 12px 12px;
+  opacity: .55;
+  pointer-events: none;
 }
 
 .hero-shell{
@@ -76,6 +88,8 @@ body{
   grid-template-columns: 1.05fr 1fr;
   gap: 3rem;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-image{
@@ -107,7 +121,7 @@ body{
   height: 100%;
   object-fit: contain;
   object-position: center bottom;
-  filter: grayscale(1) contrast(1.12) brightness(.96);
+  filter: grayscale(1) contrast(1.25) brightness(.98);
   transform: scale(1.06);
 }
 
@@ -120,7 +134,7 @@ html.dark .hero-portrait{
 }
 
 html.light .hero-portrait img{
-  filter: grayscale(1) contrast(1.18) brightness(1.02);
+  filter: grayscale(1) contrast(1.3) brightness(1.02);
 }
 
 html.dark .portrait-cutout{
@@ -130,6 +144,7 @@ html.dark .portrait-cutout{
 
 .hero-copy{
   max-width: 520px;
+  position: relative;
 }
 
 .hero-title{
@@ -145,12 +160,31 @@ html.dark .portrait-cutout{
   margin: 0 0 1rem;
 }
 
+.hero-copy::after{
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1.75rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(120,150,190,.55), transparent);
+  opacity: .45;
+  animation: scanline 7s linear infinite;
+}
+
+@keyframes scanline{
+  0%{ transform: translateY(52px); opacity: 0; }
+  10%{ opacity: .45; }
+  50%{ opacity: .3; }
+  100%{ transform: translateY(-320px); opacity: 0; }
+}
+
 .hero-links{
   display: flex;
   flex-wrap: wrap;
   gap: 1rem 1.25rem;
   margin-top: 2rem;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: .82rem;
   color: var(--fg-dim);
 }
@@ -179,7 +213,7 @@ html.dark .portrait-cutout{
 
 .hero-stats span{
   display: block;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: .72rem;
   color: var(--fg-mute);
   margin-bottom: .35rem;
@@ -226,20 +260,22 @@ html.dark .portrait-cutout{
 
 .sidebar-footer{
   border-top: 1px solid var(--border);
-  padding-top: 1.35rem;
-  padding-bottom: 0.25rem;
+  padding-top: 1.75rem;
+  padding-bottom: 0.5rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: .82rem;
   color: var(--fg-dim);
-  line-height: 1.7;
+  line-height: 1.9;
+  display: grid;
+  gap: .7rem;
 }
 
 .sidebar-footer a{
   color: var(--fg);
   text-decoration: none;
   display: block;
-  margin-top: .85rem;
-  line-height: 1.6;
+  margin-top: 0;
+  line-height: 1.55;
   word-break: break-word;
 }
 
