@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Earl John Gomez — Full-Stack Web Developer</title>
 <meta name="description" content="Portfolio of Earl John Gomez, full-stack web developer." />
 <meta property="og:type" content="website" />
@@ -67,12 +67,12 @@
   nav{
     position:fixed;top:0;left:0;right:0;z-index:50;
     display:flex;align-items:center;justify-content:space-between;
-    padding:22px clamp(24px,5vw,64px);
+    padding:calc(22px + env(safe-area-inset-top)) clamp(24px,5vw,64px);
     background:linear-gradient(to bottom, rgba(10,10,10,.92), rgba(10,10,10,0));
     backdrop-filter:blur(2px);
     transition:padding .4s var(--ease), background .4s var(--ease);
   }
-  nav.scrolled{padding:14px clamp(24px,5vw,64px);background:rgba(10,10,10,.86);border-bottom:1px solid var(--line);}
+  nav.scrolled{padding:calc(14px + env(safe-area-inset-top)) clamp(24px,5vw,64px);background:rgba(10,10,10,.86);border-bottom:1px solid var(--line);}
   .brand{display:flex;align-items:center;gap:10px;font-family:var(--head);font-weight:600;letter-spacing:.02em;font-size:15px;}
   .brand svg{width:26px;height:26px;flex-shrink:0;}
   .nav-links{display:flex;gap:36px;font-family:var(--head);font-size:13px;letter-spacing:.08em;text-transform:uppercase;}
@@ -288,7 +288,7 @@
   .contact-meta{display:flex;justify-content:center;gap:34px;flex-wrap:wrap;margin-top:36px;font-family:var(--mono);font-size:13px;color:var(--fg-dim);}
   .contact-meta a:hover{color:var(--fg);}
 
-  footer{padding:30px 0;border-top:1px solid var(--line);}
+  footer{padding:calc(30px + env(safe-area-inset-bottom)) 0;border-top:1px solid var(--line);}
   .foot-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11.5px;color:var(--fg-faint);}
   .foot-row .brand{font-size:12px;}
 
@@ -305,10 +305,23 @@
     .sec-desc{display:none;}
     .nav-cta{padding:7px 11px;font-size:11px;}
   }
+  @media(max-width:640px){
+    .car-arrow{width:40px;height:40px;}
+    .track-bar{width:90px;}
+  }
   @media(max-width:520px){
     .skill-cols{grid-template-columns:1fr;}
     .stat-row{grid-template-columns:1fr;gap:14px;}
     .contact-meta{flex-direction:column;gap:14px;}
+    .hero h1{font-size:clamp(38px,11vw,48px);}
+    .nav-cta.hide-sm{display:none;}
+    section.pad{padding:80px 0;}
+    .contact-inner{padding:90px 0 60px;}
+  }
+  @media(max-width:360px){
+    .track-bar{display:none;}
+    .carousel-controls{flex-wrap:wrap;gap:14px;}
+    .nav-cta{padding:6px 9px;font-size:10.5px;}
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -334,7 +347,7 @@
   </ul>
   <div style="display:flex;align-items:center;gap:14px;">
     <a href="Earl_John_Gomez_Resume.pdf" download class="nav-cta" id="navResume">RESUME ↓</a>
-    <a href="mailto:earljohngomez66@gmail.com" class="nav-cta">SAY HELLO →</a>
+    <a href="mailto:earljohngomez66@gmail.com" class="nav-cta hide-sm">SAY HELLO →</a>
   </div>
 </nav>
 
