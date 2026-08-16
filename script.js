@@ -1,232 +1,161 @@
-const state = loadState();
+const siteState = loadState();
 
-const escapeHtml = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+const formatted = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 
-const imageBlock = (src, alt, fallbackText, heightClass) =>
-  src
-    ? `
-      <div class="mb-4 overflow-hidden rounded-md border" style="border-color:var(--border);">
-        <img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}" class="${heightClass} w-full object-cover" loading="lazy">
-      </div>
-    `
-    : `
-      <div class="mb-4 ${heightClass} rounded-md border flex items-center justify-center text-center px-4" style="border-color:var(--border); color:var(--fg-mute);">
-        <span class="font-mono text-xs">${escapeHtml(fallbackText)}</span>
-      </div>
-    `;
-
-const videoEmbed = (video, image, title) => {
-  const src = String(video || '').trim();
-  if (!src) return '';
-  const yt = src.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]{11})/);
-  const frame = yt
-    ? `<iframe src="https://www.youtube.com/embed/${escapeHtml(yt[1])}" title="${escapeHtml(title + ' video')}" class="h-48 w-full" allowfullscreen loading="lazy"></iframe>`
-    : `<video src="${escapeHtml(src)}" poster="${escapeHtml(image || '')}" controls autoplay muted loop playsinline preload="metadata" class="h-48 w-full object-cover"></video>`;
-  return `<div class="mb-4 overflow-hidden rounded-md border" style="border-color:var(--border);">${frame}</div>`;
+const renderHero = () => {
+  const h = siteState.hero || {};
+  const set = (id, html) => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = html;
+  };
+  set('hero-eyebrow', esc(h.eyebrow || ''));
+  set('hero-title', (h.titleLines || []).map((l) => `<span class="line"><span>${esc(l)}</span></span>`).join(''));
+  set('hero-sub', formatted(h.lead || ''));
+  set('portfolio-est', esc(h.estTag || ''));
+  const img = document.getElementById('portrait-img');
+  if (img && h.portrait) img.src = h.portrait;
+  const vp = document.getElementById('view-projects-btn');
+  if (vp && h.viewProjectsLabel) vp.innerHTML = esc(h.viewProjectsLabel);
+  const dl = document.getElementById('resume-download-btn');
+  if (dl && h.resumeLabel) dl.innerHTML = esc(h.resumeLabel);
+  if (dl && h.resumeUrl) dl.href = h.resumeUrl;
 };
 
-const projectLinks = (p) => {
-  const parts = [];
-  if (p.link) parts.push(`<a href="${escapeHtml(p.link)}" target="_blank" rel="noopener" class="pill">LIVE ↗</a>`);
-  if (p.github) parts.push(`<a href="${escapeHtml(p.github)}" target="_blank" rel="noopener" class="pill">GITHUB ↗</a>`);
-  return parts.join('');
+const renderAbout = () => {
+  const a = siteState.about || {};
+  const text = (a.paragraphs || []).map((p) => `<p>${formatted(p)}</p>`).join('');
+  const stats = (a.stats || [])
+    .map((s) => `<div class="stat"><div class="num">${esc(s.num)}</div><div class="lbl">${esc(s.lbl)}</div></div>`)
+    .join('');
+  const el = document.getElementById('about-text');
+  if (el) el.innerHTML = text + `<div class="stat-row">${stats}</div>`;
 };
 
-const render = () => {
-  document.getElementById('project-grid').innerHTML = state.projects
-    .map((p) => `
-      <article class="carousel-card glow-border ticks p-6 flex flex-col" style="background:var(--bg-elev);">
-        ${p.video ? videoEmbed(p.video, p.image, p.title) : imageBlock(p.image, p.title + ' preview', 'Add an image path in admin JSON', 'h-48')}
-        <div class="flex items-center justify-between mb-4">
-          <span class="font-mono text-[11px] tracking-widest px-2 py-1" style="color:var(--fg-mute); border:1px solid var(--border);">[ PROJECT_ID: ${escapeHtml(p.id)} ]</span>
+const renderSkills = () => {
+  const cols = (siteState.skills || [])
+    .map(
+      (c) => `
+      <div class="skill-cat">
+        <h4>${esc(c.cat)}</h4>
+        <div class="tag-list">
+          ${(c.items || []).map((t) => `<span class="tag">${esc(t)}</span>`).join('')}
         </div>
-        <h3 class="font-display text-xl md:text-2xl leading-snug mb-1">${escapeHtml(p.title)}</h3>
-        <p class="font-mono text-xs mb-4" style="color:var(--fg-mute);">${escapeHtml(p.role)}</p>
-        <ul class="space-y-2 mb-5 flex-1">
-          ${p.bullets.map((b) => `<li class="text-sm leading-relaxed flex gap-2" style="color:var(--fg-dim);"><span style="color:var(--fg-mute);">›</span><span>${escapeHtml(b)}</span></li>`).join('')}
+      </div>`
+    )
+    .join('');
+  const el = document.getElementById('skill-cols');
+  if (el) el.innerHTML = cols;
+};
+
+const renderProjects = () => {
+  const cards = (siteState.projects || [])
+    .map(
+      (p) => `
+      <article class="proj-card">
+        <div class="proj-top"><span class="proj-id">SYS / ${esc(p.id)}</span><span class="proj-role">${esc(p.role)}</span></div>
+        <h3>${formatted(p.title)}</h3>
+        <p class="proj-desc">${formatted(p.desc)}</p>
+        <ul class="proj-points">
+          ${(p.bullets || []).map((b) => `<li>${formatted(b)}</li>`).join('')}
         </ul>
-        <div class="flex flex-wrap gap-2">
-          ${p.tags.map((t) => `<span class="pill">${escapeHtml(t)}</span>`).join('')}
-        </div>
-        <div class="mt-5 flex flex-wrap gap-2">${projectLinks(p)}</div>
-      </article>
-    `)
+        <div class="proj-stack">${(p.stack || []).map((t) => `<span>${esc(t)}</span>`).join('')}</div>
+      </article>`
+    )
     .join('');
-
-  document.getElementById('cert-grid').innerHTML = state.certifications
-    .map((c) => `
-      <div class="glow-border ticks p-6 flex flex-col justify-between" style="background:var(--bg-elev);">
-        ${imageBlock(c.image, c.name + ' certificate preview', 'Add a certificate image path in admin JSON', 'h-40')}
-        <div>
-          <p class="font-mono text-[11px] mb-3" style="color:var(--fg-mute);">[ CREDENTIAL ]</p>
-          <h3 class="font-display text-lg leading-snug mb-1">${escapeHtml(c.name)}</h3>
-          <p class="font-mono text-xs" style="color:var(--fg-mute);">${escapeHtml(c.issuer)}</p>
-        </div>
-        <a href="${escapeHtml(c.link)}" target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-2 font-mono text-xs glow-border px-3 py-2 w-fit" style="color:var(--fg-dim);">
-          VERIFY <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg>
-        </a>
-      </div>
-    `)
-    .join('');
-
-  document.getElementById('skills-grid').innerHTML = state.skills
-    .map((s) => `
-      <div class="skills-card glow-border ticks p-6 h-full" style="background:var(--bg-elev);">
-        <p class="font-mono text-xs tracking-widest mb-3 pb-2" style="color:var(--fg-mute); border-bottom:1px solid var(--border);">${escapeHtml(s.cat.toUpperCase())}</p>
-        <div class="flex flex-wrap gap-2">
-          ${s.items.map((i) => `<span class="pill">${escapeHtml(i)}</span>`).join('')}
-        </div>
-      </div>
-    `)
-    .join('');
-
-  document.getElementById('timeline').innerHTML = `
-    <div class="absolute left-0 top-2 bottom-2 w-px timeline-line"></div>
-    ${state.experience
-      .map((e) => `
-        <div class="relative pb-14 last:pb-0">
-          <span class="absolute -left-8 md:-left-10 top-1.5 w-2.5 h-2.5 rounded-full" style="background:var(--fg); box-shadow:0 0 0 3px var(--bg), 0 0 0 4px var(--border);"></span>
-          <p class="font-mono text-xs mb-2" style="color:var(--fg-mute);">${escapeHtml(e.date)}</p>
-          <h3 class="font-display text-xl md:text-2xl mb-1">${escapeHtml(e.title)}</h3>
-          <p class="font-mono text-xs mb-4" style="color:var(--fg-dim);">${escapeHtml(e.org)}</p>
-          <ul class="space-y-2 max-w-2xl">
-            ${e.bullets.map((b) => `<li class="text-sm leading-relaxed flex gap-2" style="color:var(--fg-dim);"><span style="color:var(--fg-mute);">›</span><span>${escapeHtml(b)}</span></li>`).join('')}
-          </ul>
-        </div>
-      `)
-      .join('')}
-  `;
-
-  document.getElementById('education-grid').innerHTML = state.education
-    .map((ed) => `
-      <div class="glow-border ticks p-6" style="background:var(--bg-elev);">
-        <p class="font-mono text-[11px] mb-3" style="color:var(--fg-mute);">[ RECORD ]</p>
-        <h3 class="font-display text-lg leading-snug mb-2">${escapeHtml(ed.school)}</h3>
-        <p class="text-sm mb-3" style="color:var(--fg-dim);">${escapeHtml(ed.degree)}</p>
-        <p class="font-mono text-xs" style="color:var(--fg-mute);">${escapeHtml(ed.years)}</p>
-      </div>
-    `)
-    .join('');
+  const el = document.getElementById('projTrack');
+  if (el) el.innerHTML = cards;
+  const total = document.getElementById('projTotal');
+  if (total) total.textContent = String((siteState.projects || []).length).padStart(2, '0');
 };
 
-const bootHudReadout = () => {
-  const hudLines = ['CORE ......... OK', 'RENDER ....... OK', 'NETWORK ...... OK', 'PORTFOLIO .... LOADED'];
-  const hudReadoutEl = document.getElementById('hud-readout');
-  if (!hudReadoutEl) return;
-  hudLines.forEach((line, i) => {
-    setTimeout(() => {
-      const p = document.createElement('p');
-      p.textContent = line;
-      p.style.opacity = '0';
-      p.style.transition = 'opacity .35s ease';
-      hudReadoutEl.appendChild(p);
-      requestAnimationFrame(() => {
-        p.style.opacity = '1';
-      });
-    }, i * 260);
-  });
+const renderCerts = () => {
+  const cards = (siteState.certifications || [])
+    .map(
+      (c) => `
+      <article class="cert-card">
+        <img class="cert-img" src="${esc(c.image)}" alt="${esc(c.name)} certificate" />
+        <h4>${formatted(c.name)}</h4>
+        <span class="cert-issuer">${esc(c.issuer)}</span>
+        <a class="cert-link" href="${esc(c.link)}" target="_blank" rel="noopener">View credential <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+      </article>`
+    )
+    .join('');
+  const el = document.getElementById('certTrack');
+  if (el) el.innerHTML = cards;
+  const total = document.getElementById('certTotal');
+  if (total) total.textContent = String((siteState.certifications || []).length).padStart(2, '0');
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-  const hudImageEl = document.getElementById('hud-image');
-  if (hudImageEl) {
-    hudImageEl.innerHTML = `
-      <img
-        src="./1.png"
-        alt="HUD image"
-        class="hud-image h-full w-full object-cover portrait-cutout"
-        loading="lazy"
-      >
-    `;
+const renderExperience = () => {
+  const items = (siteState.experience || [])
+    .map(
+      (x, i) => `
+      <div class="tl-item${i === 0 ? ' active' : ''}">
+        <div class="tl-head"><h3>${formatted(x.title)}</h3><span>${esc(x.date)}</span></div>
+        <span class="tl-org">${esc(x.org)}</span>
+        <ul>
+          ${(x.bullets || []).map((b) => `<li>${formatted(b)}</li>`).join('')}
+        </ul>
+      </div>`
+    )
+    .join('');
+  const el = document.getElementById('timeline');
+  if (el) el.innerHTML = items;
+};
+
+const renderEducation = () => {
+  const cards = (siteState.education || [])
+    .map(
+      (e) => `
+      <div class="edu-card">
+        <span class="edu-year">${esc(e.years)}</span>
+        <h4>${formatted(e.school)}</h4>
+        <p>${formatted(e.degree)}</p>
+      </div>`
+    )
+    .join('');
+  const el = document.getElementById('edu-grid');
+  if (el) el.innerHTML = cards;
+};
+
+const renderContact = () => {
+  const c = siteState.contact || {};
+  const cta = document.getElementById('contact-cta');
+  if (cta) {
+    cta.href = `mailto:${esc(c.email)}`;
+    cta.innerHTML = (c.ctaLines || []).map((l) => esc(l)).join('<br>');
   }
-
-  render();
-  bootHudReadout();
-
-  const root = document.documentElement;
-  const themeBtn = document.getElementById('theme-toggle');
-  const themeLabel = document.getElementById('theme-label');
-
-  themeBtn.addEventListener('click', () => {
-    const isLight = root.classList.toggle('light');
-    root.classList.toggle('dark', !isLight);
-    themeLabel.textContent = isLight ? '[ LIGHT ]' : '[ DARK ]';
-  });
-
-  document.getElementById('back-to-top').addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  const carousel = document.getElementById('project-grid');
-  const carouselPrev = document.getElementById('carousel-prev');
-  const carouselNext = document.getElementById('carousel-next');
-
-  document.querySelectorAll('#project-grid .carousel-card').forEach((card) => {
-    const clone = card.cloneNode(true);
-    clone.setAttribute('aria-hidden', 'true');
-    carousel.appendChild(clone);
-  });
-
-  const GAP = 20;
-  const carouselStep = () => {
-    const card = carousel.querySelector('.carousel-card');
-    return card ? card.offsetWidth + GAP : carousel.clientWidth * 0.8;
-  };
-
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const autoAdvance = () => {
-    if (carousel.matches(':hover') || document.hidden) return;
-    const half = carousel.scrollWidth / 2;
-    if (carousel.scrollLeft >= half) {
-      carousel.scrollLeft = 0;
-    }
-    carousel.scrollBy({ left: carouselStep(), behavior: 'smooth' });
-  };
-
-  let autoTimer = null;
-  const startAuto = () => {
-    stopAuto();
-    autoTimer = setInterval(autoAdvance, 3800);
-  };
-  const stopAuto = () => {
-    if (autoTimer) clearInterval(autoTimer);
-    autoTimer = null;
-  };
-
-  if (!reduceMotion) {
-    startAuto();
-    const resumeSoon = () => {
-      stopAuto();
-      setTimeout(startAuto, 6000);
-    };
-    carousel.addEventListener('wheel', resumeSoon, { passive: true });
-    carousel.addEventListener('touchstart', resumeSoon, { passive: true });
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) stopAuto();
-      else startAuto();
-    });
+  const emailLink = document.getElementById('emailLink');
+  if (emailLink) {
+    emailLink.href = `mailto:${esc(c.email)}`;
+    emailLink.textContent = c.email;
+    emailLink.dataset.email = c.email;
   }
+  const phone = document.getElementById('phone-link');
+  if (phone) {
+    phone.href = `tel:${esc(c.phoneLink)}`;
+    phone.textContent = c.phone;
+  }
+  const loc = document.getElementById('location-span');
+  if (loc) loc.textContent = c.location;
+  const sayHello = document.getElementById('say-hello');
+  if (sayHello) sayHello.href = `mailto:${esc(c.email)}`;
+  const footBrand = document.getElementById('foot-brand');
+  if (footBrand && siteState.footer) footBrand.textContent = siteState.footer.brand;
+  const footNote = document.getElementById('foot-note');
+  if (footNote && siteState.footer) footNote.textContent = siteState.footer.note;
+};
 
-  carouselPrev.addEventListener('click', () => {
-    carousel.scrollBy({ left: -carouselStep(), behavior: 'smooth' });
-    if (!reduceMotion) setTimeout(startAuto, 6000);
-  });
-  carouselNext.addEventListener('click', () => {
-    carousel.scrollBy({ left: carouselStep(), behavior: 'smooth' });
-    if (!reduceMotion) setTimeout(startAuto, 6000);
-  });
+const renderSite = () => {
+  renderHero();
+  renderAbout();
+  renderSkills();
+  renderProjects();
+  renderCerts();
+  renderExperience();
+  renderEducation();
+  renderContact();
+};
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.12 },
-  );
-  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-});
+renderSite();

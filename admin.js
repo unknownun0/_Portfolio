@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const adminCopyBtn = document.getElementById('admin-copy-btn');
   const adminResetBtn = document.getElementById('admin-reset-btn');
   const adminJson = document.getElementById('admin-json');
-  const adminUser = document.getElementById('admin-user');
   const adminPass = document.getElementById('admin-pass');
 
   themeBtn.addEventListener('click', () => {
@@ -31,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   adminLoginBtn.addEventListener('click', () => {
-    if (adminUser.value === ADMIN_USER && adminPass.value === ADMIN_PASS) {
+    if (adminPass.value === ADMIN_PASS) {
       adminUnlocked = true;
       adminLogin.classList.add('hidden');
       adminEditor.classList.remove('hidden');
